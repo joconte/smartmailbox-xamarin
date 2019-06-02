@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSmartMailBox.Views.CreateAccountPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style  TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+            </Style>
+            <Style x:Key="labelTitreStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="labelLegende" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource NormalFont }"/>
+                <Setter Property="TextColor" Value="Gray"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+            </Style>
+            <Style x:Key="boutonLegende" TargetType="Button">
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="Thickness" iOS="10, 0, 0, 0" Android="0,0,0,0" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="PlaceholderColor" Value="LightGray"/>
+                <Setter Property="BackgroundColor" Value="#ffffff"/>
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="#ffffff"/>
+                <Setter Property="BackgroundColor" Value="#50a9db"/>
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="BorderRadius">
+                    <Setter.Value>
+                        <OnPlatform iOS="20" Android="30" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <StackLayout x:Name="infoPersoStackLayout">
+                    <Frame Padding="0" Margin="5,5,5,5" OutlineColor="#47abe0" CornerRadius="10" BackgroundColor="White">
+                        <StackLayout >
+                            <Frame OutlineColor="#47abe0" BackgroundColor="#47abe0">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label Text="Création de compte" HorizontalOptions="Center" HorizontalTextAlignment="Center" 
+                                           TextColor="White" FontAttributes="Bold" />
+                                </StackLayout>
+                            </Frame>
+                            <StackLayout Margin="10,10,10,10" BackgroundColor="White">
+                                <StackLayout Orientation="Vertical" HorizontalOptions="Fill" >
+                                    <StackLayout>
+
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="Fill" >
+                                    <Label Text="Prénom : "  />
+                                    <Entry  x:Name="Entry_firstName" Text="{Binding firstName}"  Placeholder="06 12 34 56 78" 
+                                            HorizontalOptions="Fill"  Style="{StaticResource EntryStyle}" />
+                                    <Label x:Name="firstName" TextColor="Red" IsVisible="False"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="Fill" >
+                                    <Label Text="Nom :"  />
+                                    <Entry  x:Name="Entry_lastName" Text="{Binding lastName}" Placeholder="06 12 34 56 78" 
+                                            HorizontalOptions="Fill"  Style="{StaticResource EntryStyle}" />
+                                    <Label x:Name="lastName" TextColor="Red" IsVisible="False"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="Fill" >
+                                    <Label Text="Mail : "  />
+                                    <Entry  x:Name="Entry_Mail" Text="{Binding email}" Placeholder="example@mail.com" HorizontalOptions="Fill"  
+                                            Style="{StaticResource EntryStyle}" />
+                                    <Label x:Name="email" TextColor="Red" IsVisible="False"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="Fill" >
+                                    <Label Text="Mot de passe : "  />
+                                    <Entry  x:Name="Entry_password1" Placeholder="1234abcd" HorizontalOptions="Fill"  
+                                            Style="{StaticResource EntryStyle}" />
+                                    <Label x:Name="password" TextColor="Red" IsVisible="False"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="Fill" >
+                                    <Label Text="Confirmer mot de passe : "  />
+                                    <Entry  x:Name="Entry_password2" Placeholder="1234abcd" HorizontalOptions="Fill"  
+                                            Style="{StaticResource EntryStyle}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Button x:Name="Btn_Save" Text="Créer compte" Clicked="Btn_Save_Clicked"  Style="{StaticResource ButtonStyle}"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

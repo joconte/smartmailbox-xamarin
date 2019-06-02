@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSmartMailBox.App">
+    <Application.Resources>
+        <!--Font Family suivant plateforme-->
+        <OnPlatform x:TypeArguments="x:String" x:Key="BoldFont">
+            <!--Font ajouter dans App.android/Assets-->
+            <On Platform="Android" Value="Neometric-Medium.ttf" />
+            <!--Font ajouter dans App.iOS/Ressources-->
+            <On Platform="iOS" Value="Neometric-Medium" />
+        </OnPlatform>
+        <OnPlatform x:TypeArguments="x:String" x:Key="NormalFont">
+            <On Platform="Android" Value="Neometric-Medium.ttf" />
+            <On Platform="iOS" Value="Neometric-Medium" />
+        </OnPlatform>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="AppSmartMailBox.Views.AjoutBALPage"
+            xmlns:src="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+            Title="Ajout boites aux lettres"
+            BackgroundColor="White">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style  TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+            </Style>
+
+            <Style x:Key="labelTitreStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+
+            <Style x:Key="labelLegende" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource NormalFont }"/>
+                <Setter Property="TextColor" Value="Gray"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+            </Style>
+            <Style  TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+                <Setter Property="BorderRadius">
+                    <Setter.Value>
+                        <OnPlatform iOS="10" Android="10" />
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="Thickness" iOS="10, 0, 0, 0" Android="10,0,0,0" />
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame Padding="0" Margin="5,5,5,5" OutlineColor="#47abe0" CornerRadius="10" HeightRequest="200">
+                <StackLayout>
+                    <Frame OutlineColor="#47abe0" BackgroundColor="#47abe0">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label Text="Boite aux lettres" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold" />
+                        </StackLayout>
+                    </Frame>
+                    <StackLayout Margin="10,10,10,10" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                            <StackLayout Orientation="Vertical" >
+                                <Label Text="Numéro de série :" />
+                                <Entry Placeholder="0123456789" x:Name="Entry_numSerie"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" >
+                                <Label Text="Description" />
+                                <Entry Placeholder="Ma maison" x:Name="Entry_descriptionBAL"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                            <Frame OutlineColor="#47abe0" BackgroundColor="White">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AddBAL" />
+                                </Frame.GestureRecognizers>
+                                <src:IconImage Icon="fa-plus-circle" IconColor="Green" IconSize="30"/>
+                            </Frame>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

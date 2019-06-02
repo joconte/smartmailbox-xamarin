@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSmartMailBox.Views.ListeBoiteAuLettrePage"
+             xmlns:src="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             xmlns:controls="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+             Title="Boites aux lettres"
+             BackgroundColor="White">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style  TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+            </Style>
+
+            <Style x:Key="labelTitreStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+
+            <Style x:Key="labelLegende" TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource NormalFont }"/>
+                <Setter Property="TextColor" Value="Gray"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+            </Style>
+            <Style  TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource BoldFont }"/>
+                <Setter Property="BorderRadius">
+                    <Setter.Value>
+                        <OnPlatform iOS="10" Android="10" />
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="Thickness" iOS="10, 0, 0, 0" Android="10,0,0,0" />
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+
+            <DataTemplate x:Key="dossierTemplateBAL">
+                <ViewCell>
+                    <Frame Padding="0" Margin="5,5,5,5" OutlineColor="{Binding ColorBoiteAuLettre}" CornerRadius="10" HeightRequest="200" ClassId="{Binding id}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="MyListViewBAL_ItemTapped" />
+                        </Frame.GestureRecognizers>
+                        <StackLayout>
+                            <Frame OutlineColor="{Binding ColorBoiteAuLettre}" BackgroundColor="{Binding ColorBoiteAuLettre}">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label Text="{Binding description}" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold" />
+                                </StackLayout>
+                            </Frame>
+                            <StackLayout Margin="10,10,10,10">
+                                <StackLayout Orientation="Horizontal">
+                                    <src:IconImage Icon="fa-envelope-o" IconColor="Black" IconSize="30"/>
+                                    <Label Text="{Binding NbCourrier}" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <src:IconImage Icon="fa-calendar" IconColor="Black" IconSize="30"/>
+                                    <Label Text="{Binding DateDerniereActivite}" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <src:IconImage Icon="fa-envelope" IconColor="Black" IconSize="30"/>
+                                    <Label Text="{Binding NbCourrierNonVu}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </ViewCell>
+            </DataTemplate>
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <controls:PullToRefreshLayout
+          IsPullToRefreshEnabled="True"
+          RefreshCommand="{Binding RefreshCommand}"
+          IsRefreshing="{Binding IsBusy}"
+          RefreshColor="Blue">
+            <StackLayout>
+                <ListView x:Name="MyListViewBAL"
+                  HasUnevenRows="True"
+                  BackgroundColor="White"
+                  SeparatorVisibility="None"
+                  HorizontalOptions="Fill"
+                  ItemTemplate="{StaticResource dossierTemplateBAL}"
+                                      ItemsSource="{Binding boiteAuLettres}">
+
+                </ListView>
+            </StackLayout>
+        </controls:PullToRefreshLayout>
+    </ContentPage.Content>
+</ContentPage>

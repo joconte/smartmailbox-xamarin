@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AppSmartMailBox"
+             x:Class="AppSmartMailBox.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="labelStyle" TargetType="Label">
+                <Setter Property="TextDecorations" Value="Underline"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="Margin" Value="0,20,0,0"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="PlaceholderColor" Value="#Black"/>
+                <Setter Property="BackgroundColor" Value="#ffffff"/>
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="#ffffff"/>
+                <Setter Property="BackgroundColor" Value="#50a9db"/>
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="Thickness" iOS="0, 40, 0, 20" Android="0,30,0,10" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="BorderRadius">
+                    <Setter.Value>
+                        <OnPlatform iOS="20" Android="30" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#ffffff">
+            <StackLayout x:Name="LogoStack">
+                <StackLayout.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,40,0,0" />
+                    </OnPlatform>
+                </StackLayout.Margin >
+                <Image x:Name="LoginIcon" Source="MyDilLogo.png">
+                    <Image.Margin>
+                        <OnPlatform x:TypeArguments="Thickness" iOS="0, 60, 0, 0"  Android="0,40,0,0"/>
+                    </Image.Margin>
+                </Image>
+            </StackLayout>
+            <StackLayout x:Name="LoginEntrysStack"  Margin="0,40,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="Center">
+                <StackLayout>
+                    <Label  x:Name="Lbl_Username" Style="{StaticResource labelStyle}" Text="NOM D'UTILISATEUR"/>
+                    <Entry  x:Name="Entry_Username" Text="admin@contejonathan.net"  Placeholder="admin@contejonathan.net" 
+                            Style="{StaticResource EntryStyle}" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+                <StackLayout>
+                    <Label  x:Name="Lbl_Password" Style="{StaticResource labelStyle}" Text="MOT DE PASSE" />
+                    <Entry  x:Name="Entry_Password" Placeholder="********" Text="mydil34000"  Style="{StaticResource EntryStyle}" 
+                            IsPassword="True" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+                <Button x:Name="Btn_Signin" Text="SE CONNECTER" Clicked="SignInProcedure"  Style="{StaticResource ButtonStyle}" 
+                        HorizontalOptions="Center" Padding="10"/>
+                <Button x:Name="Btn_MdpOublie" Text="MOT DE PASSE OUBLIE" Clicked="Btn_MdpOublie_Clicked"  Style="{StaticResource ButtonStyle}" 
+                        HorizontalOptions="Center" Padding="10"/>
+                <Button x:Name="Btn_CreateAccount" Text="CREER UN COMPTE" Clicked="Btn_CreateAccount_Clicked"  Style="{StaticResource ButtonStyle}" 
+                        HorizontalOptions="Center" Padding="10"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
