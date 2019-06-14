@@ -8,9 +8,9 @@ namespace AppSmartMailBox
 {
     public partial class App : Application
     {
-        public static Utilisateur utilisateur { get; set; }
+        public static Utilisateur Utilisateur { get; set; }
 
-        public static RestService restService;
+        public static RestService RestService;
         public App()
         {
             InitializeComponent();
@@ -22,18 +22,8 @@ namespace AppSmartMailBox
 
         public static RestService Rest
         {
-            get
-            {
-                if (restService == null)
-                {
-                    restService = new RestService();
-                }
-                return restService;
-            }
-            set
-            {
-                _rest = value;
-            }
+            get => RestService ?? (RestService = new RestService());
+            set => _rest = value;
         }
 
         protected override void OnStart()

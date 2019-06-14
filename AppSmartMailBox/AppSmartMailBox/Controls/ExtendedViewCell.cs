@@ -15,21 +15,15 @@ namespace AppSmartMailBox.Controls
 
         public Color SelectedBackgroundColor
         {
-            get { return (Color)GetValue(SelectedBackgroundColorProperty); }
-            set { SetValue(SelectedBackgroundColorProperty, value); }
+            get => (Color)GetValue(SelectedBackgroundColorProperty);
+            set => SetValue(SelectedBackgroundColorProperty, value);
         }
 
         public static readonly BindableProperty SelectedItemBackgroundColorProperty = BindableProperty.Create("SelectedItemBackgroundColor", typeof(Color), typeof(ExtendedViewCell), Color.FromHex("#47abe0"));  
         public Color SelectedItemBackgroundColor
         {
-            get
-            {
-                return (Color)GetValue(SelectedItemBackgroundColorProperty);
-            }
-            set
-            {
-                SetValue(SelectedItemBackgroundColorProperty, value);
-            }
+            get => (Color)GetValue(SelectedItemBackgroundColorProperty);
+            set => SetValue(SelectedItemBackgroundColorProperty, value);
         }
     }
 }

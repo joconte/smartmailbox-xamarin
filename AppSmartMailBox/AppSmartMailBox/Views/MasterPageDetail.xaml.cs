@@ -14,71 +14,51 @@ namespace AppSmartMailBox.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MasterPageDetail : MasterDetailPage
     {
-        public List<MasterPageItem> menuList { get; set; }
+        public List<MasterPageItem> MenuList { get; set; }
         public MasterPageDetail()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             NavigationPage.SetHasBackButton(this, false);
 
-            Identite.Text = App.utilisateur.lastName!= null ? App.utilisateur.lastName.ToUpper() : "" + " " + App.utilisateur.firstName!= null ? App.utilisateur.firstName: "";
+            Identite.Text = App.Utilisateur.lastName.ToUpper() + " " + App.Utilisateur.firstName;
 
-            menuList = new List<MasterPageItem>();
+            MenuList = new List<MasterPageItem>();
 
             
-            var page1 = new MasterPageItem() { id = 1, Title = "Informations personnelles", Icon = "fa-user", IconColor = "#50a9db", TargetType = typeof(InfosPersonnellesPage) };
-            menuList.Add(page1);
+            var page1 = new MasterPageItem() { Id = 1, Title = "Informations personnelles", Icon = "fa-user", IconColor = "#50a9db", TargetType = typeof(InfosPersonnellesPage) };
+            MenuList.Add(page1);
 
-            Page pageAccueil = new InfosPersonnellesPage();
+            var page2 = new MasterPageItem() { Id = 2, Title = "Boites aux lettres", Icon = "fa-folder-open", IconColor = "#50a9db", TargetType = typeof(ListeBoiteAuLettrePage) };
+            MenuList.Add(page2);
+            Page pageAccueil = new ListeBoiteAuLettrePage();
 
-            /*if (App.dossierBilanSantes.Any(e => e.EtatDossier == EtatDossier.Termine))
+            var page3 = new MasterPageItem() { Id = 3, Title = "Ajout boite aux lettres", Icon = "fa-plus-circle", IconColor = "#50a9db", TargetType = typeof(AjoutBALPage) };
+            MenuList.Add(page3);
+            if(App.Utilisateur.role==Utilisateur.Role.Admin)
             {
-                var page5 = new MasterPageItem() { id = 5, Title = "Anciens dossiers", Icon = "fa-folder-open", IconColor = "#50a9db", TargetType = typeof(ListeDossiersAnterieursCarouselPage) };
-                menuList.Add(page5);
-                pageAccueil = new ListeDossiersAnterieursCarouselPage();
-            }
-            */
-            
-            var page2 = new MasterPageItem() { id = 2, Title = "Boites aux lettres", Icon = "fa-folder-open", IconColor = "#50a9db", TargetType = typeof(ListeBoiteAuLettrePage) };
-            menuList.Add(page2);
-            pageAccueil = new ListeBoiteAuLettrePage();
-            
-            //Création des items du menu Android / IOS icons
-
-            var page3 = new MasterPageItem() { id = 3, Title = "Ajout boite aux lettres", Icon = "fa-plus-circle", IconColor = "#50a9db", TargetType = typeof(AjoutBALPage) };
-            menuList.Add(page3);
-            if(App.utilisateur.role==Utilisateur.Role.Admin)
-            {
-                var page5 = new MasterPageItem() { id = 5, Title = "Admin : Créer boite aux lettres", Icon = "fa-plus-circle", IconColor = "#50a9db", TargetType = typeof(CreateBALPage) };
-                menuList.Add(page5);
+                var page5 = new MasterPageItem() { Id = 5, Title = "Admin : Créer boite aux lettres", Icon = "fa-plus-circle", IconColor = "#50a9db", TargetType = typeof(CreateBALPage) };
+                MenuList.Add(page5);
             }
             
-            var page4 = new MasterPageItem() { id = 4, Title = "Se deconnecter", Icon = "fa-power-off", IconColor = "Gray", TargetType = typeof(MainPage) };
-            menuList.Add(page4);
-            /*
-            //Ajout de chaque item créer au menu.
-
+            var page4 = new MasterPageItem() { Id = 4, Title = "Se deconnecter", Icon = "fa-power-off", IconColor = "Gray", TargetType = typeof(MainPage) };
+            MenuList.Add(page4);
             
-            
-            */
-            navigationDrawerList.ItemsSource = menuList;
+            navigationDrawerList.ItemsSource = MenuList;
             
             Detail = new NavigationPage(pageAccueil);
-            /*
-            Detail = new NavigationPage(pageAccueil);
-            Detail = new NavigationPage();*/
+           
         }
 
         private void MyListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
 
-            foreach (var item in menuList)
+            foreach (var item in MenuList)
             {
                 item.LabelColor = Color.Gray;
             }
             MasterPageItem model = e.SelectedItem as MasterPageItem;
             model.Indicateur = true;
-            //model.LabelColor = ColorItemMenuSelected(model.id);
         }
 
         private async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -90,7 +70,7 @@ namespace AppSmartMailBox.Views
                 var page = new UserAnimationPage();
 
                 await PopupNavigation.Instance.PushAsync(page);
-                switch (myselecteditem.id)
+                switch (myselecteditem.Id)
                 {
 
                     case 1:
@@ -108,8 +88,8 @@ namespace AppSmartMailBox.Views
                     case 4:
                         // Logique de deconnexion à mettre en place
                         App.Rest = null;
-                        App.restService = null;
-                        App.utilisateur = null;
+                        App.RestService = null;
+                        App.Utilisateur = null;
                         
                         Detail = new NavigationPage(new MainPage());
                         break;
@@ -120,7 +100,6 @@ namespace AppSmartMailBox.Views
 
                 }
                 await PopupNavigation.Instance.PopAsync();
-                //((ListView)sender).SelectedItem = null;
                 await Task.Delay(10);
                 IsPresented = false;
                 myselecteditem.Indicateur = false;

@@ -45,22 +45,16 @@ namespace AppSmartMailBox
             utilisateur.password = Entry_Password.Text;
             try
             {
-                var result = App.Rest.Login(utilisateur);
-                if (result != null)
+                await App.Rest.Login(utilisateur);
+                
+                GenericObjectWithErrorModel<Utilisateur> utilisateurWithError = App.Rest.GetResponse<GenericObjectWithErrorModel<Utilisateur>>(Constants.UtilisateurConnected);
+                if (utilisateurWithError.t == null)
                 {
-
-                    GenericObjectWithErrorModel<Utilisateur> utilisateurWithError = App.Rest.GetResponse<GenericObjectWithErrorModel<Utilisateur>>(Constants.UtilisateurConnected);
-                    if (utilisateurWithError.t == null)
-                    {
-                        throw new Exception("Le proposant n'a pas été trouvé.");
-                    }
-                    App.utilisateur = utilisateurWithError.t;
-                    Device.BeginInvokeOnMainThread(() => App.Current.MainPage = new NavigationPage(new MasterPageDetail()));
+                    throw new Exception("Utilisateur non trouvé");
                 }
-                else
-                {
-                    //throw new Exception(result.error_description);
-                }
+                App.Utilisateur = utilisateurWithError.t;
+                Device.BeginInvokeOnMainThread(() => App.Current.MainPage = new NavigationPage(new MasterPageDetail()));
+                
             }
             catch (Exception ex)
             {
@@ -82,9 +76,9 @@ namespace AppSmartMailBox
         {
             var page = new UserAnimationPage();
             await PopupNavigation.Instance.PushAsync(page);
-            if (!String.IsNullOrEmpty(Entry_Username.Text))
+            if (!string.IsNullOrEmpty(Entry_Username.Text))
             {
-                var utilisateurCreate = App.Rest.PostReponse<String>(Constants.ForgotPassword, Entry_Username.Text);
+                var utilisateurCreate = App.Rest.PostReponse<string>(Constants.ForgotPassword, Entry_Username.Text);
 
                 if (utilisateurCreate.t != null)
                 {

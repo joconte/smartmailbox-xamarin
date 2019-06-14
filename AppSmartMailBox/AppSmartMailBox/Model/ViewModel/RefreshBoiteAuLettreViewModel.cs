@@ -13,49 +13,49 @@ namespace AppSmartMailBox.Model.ViewModel
     public class RefreshBoiteAuLettreViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<string> Items { get; set; }
-        ListeBoiteAuLettrePage page;
+        readonly ListeBoiteAuLettrePage _page;
         public RefreshBoiteAuLettreViewModel(ListeBoiteAuLettrePage page)
         {
-            this.page = page;
+            this._page = page;
             Items = new ObservableCollection<string>();
         }
 
-        bool canRefresh = true;
+        bool _canRefresh = true;
 
         public bool CanRefresh
         {
-            get { return canRefresh; }
+            get => _canRefresh;
             set
             {
-                if (canRefresh == value)
+                if (_canRefresh == value)
                     return;
 
-                canRefresh = value;
+                _canRefresh = value;
                 OnPropertyChanged("CanRefresh");
             }
         }
 
 
-        bool isBusy;
+        bool _isBusy;
 
         public bool IsBusy
         {
-            get { return isBusy; }
+            get => _isBusy;
             set
             {
-                if (isBusy == value)
+                if (_isBusy == value)
                     return;
 
-                isBusy = value;
+                _isBusy = value;
                 OnPropertyChanged("IsBusy");
             }
         }
 
-        ICommand refreshCommand;
+        ICommand _refreshCommand;
 
         public ICommand RefreshCommand
         {
-            get { return refreshCommand ?? (refreshCommand = new Command(async () => await ExecuteRefreshCommand())); }
+            get { return _refreshCommand ?? (_refreshCommand = new Command(async () => await ExecuteRefreshCommand())); }
         }
 
         async Task ExecuteRefreshCommand()
@@ -73,14 +73,13 @@ namespace AppSmartMailBox.Model.ViewModel
             }
             else
             {
-                App.utilisateur = utilisateurWithError.t;
+                App.Utilisateur = utilisateurWithError.t;
             }
 
             IsBusy = false;
 
-            //page.DisplayAlert("Refreshed", "You just refreshed the page! Nice job! Pull to refresh is now disabled", "OK");
             this.CanRefresh = false;
-            page.InitBinding();
+            _page.InitBinding();
         }
 
         #region INotifyPropertyChanged implementation
@@ -91,10 +90,7 @@ namespace AppSmartMailBox.Model.ViewModel
 
         public void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged == null)
-                return;
-
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

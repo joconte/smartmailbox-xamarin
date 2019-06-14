@@ -64,3 +64,5 @@ C:\Users\Admin\source\repos\AppSmartMailBox\AppSmartMailBox\AppSmartMailBox.iOS\
 C:\Users\Admin\source\repos\AppSmartMailBox\AppSmartMailBox\AppSmartMailBox.iOS\obj\iPhoneSimulator\Debug\AppSmartMailBox.iOS.csproj.CopyComplete
 C:\Users\Admin\source\repos\AppSmartMailBox\AppSmartMailBox\AppSmartMailBox.iOS\obj\iPhoneSimulator\Debug\AppSmartMailBox.iOS.exe
 C:\Users\Admin\source\repos\AppSmartMailBox\AppSmartMailBox\AppSmartMailBox.iOS\obj\iPhoneSimulator\Debug\AppSmartMailBox.iOS.pdb
+C:\Users\Admin\source\repos\AppSmartMailBox\AppSmartMailBox\AppSmartMailBox.iOS\bin\iPhoneSimulator\Debug\Refractored.XamForms.PullToRefresh.dll
+C:\Users\Admin\source\repos\AppSmartMailBox\AppSmartMailBox\AppSmartMailBox.iOS\bin\iPhoneSimulator\Debug\Refractored.XamForms.PullToRefresh.pdb

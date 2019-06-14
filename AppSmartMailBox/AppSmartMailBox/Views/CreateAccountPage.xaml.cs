@@ -14,12 +14,12 @@ namespace AppSmartMailBox.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateAccountPage : ContentPage
     {
-        private Utilisateur utilisateur; 
+        private readonly Utilisateur _utilisateur; 
         public CreateAccountPage()
         {
             InitializeComponent();
-            utilisateur = new Utilisateur();
-            BindingContext = utilisateur;
+            _utilisateur = new Utilisateur();
+            BindingContext = _utilisateur;
         }
 
         private async void Btn_Save_Clicked(object sender, EventArgs e)
@@ -29,8 +29,8 @@ namespace AppSmartMailBox.Views
             if (!String.IsNullOrEmpty(Entry_password1.Text) && Entry_password1.Text == Entry_password2.Text)
             {
                 password.IsVisible = false;
-                utilisateur.password = Entry_password1.Text;
-                var utilisateurCreate = App.Rest.PostReponse<Utilisateur>(Constants.RegisterUtilisateur, JsonConvert.SerializeObject(utilisateur));
+                _utilisateur.password = Entry_password1.Text;
+                var utilisateurCreate = App.Rest.PostReponse<Utilisateur>(Constants.RegisterUtilisateur, JsonConvert.SerializeObject(_utilisateur));
                 if (utilisateurCreate.Errors != null)
                 {
                     foreach (KeyValuePair<string, List<string>> attr in utilisateurCreate.Errors)

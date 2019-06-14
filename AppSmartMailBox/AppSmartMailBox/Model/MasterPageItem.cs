@@ -8,38 +8,32 @@ namespace AppSmartMailBox.Model
 {
     public class MasterPageItem : INotifyPropertyChanged
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Icon { get; set; }
         public string IconColor { get; set; }
         public Type TargetType { get; set; }
 
-        bool indicateur;
+        bool _indicateur;
 
-        Color labelColor;
+        Color _labelColor;
         public Color LabelColor
         {
             set
             {
-                labelColor = value;
+                _labelColor = value;
                 OnPopertyChanged("LabelColor");
             }
-            get
-            {
-                return labelColor;
-            }
+            get => _labelColor;
         }
         public bool Indicateur
         {
             set
             {
-                indicateur = value;
+                _indicateur = value;
                 OnPopertyChanged("Indicateur");
             }
-            get
-            {
-                return indicateur;
-            }
+            get => _indicateur;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

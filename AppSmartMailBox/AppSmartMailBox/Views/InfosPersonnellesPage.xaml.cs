@@ -15,12 +15,12 @@ namespace AppSmartMailBox.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class InfosPersonnellesPage : ContentPage
     {
-        private Utilisateur utilisateur;
+        private readonly Utilisateur _utilisateur;
         public InfosPersonnellesPage()
         {
             InitializeComponent();
-            utilisateur = App.utilisateur;
-            BindingContext = utilisateur;
+            _utilisateur = App.Utilisateur;
+            BindingContext = _utilisateur;
         }
 
         private async void Btn_Save_Clicked(object sender, EventArgs e)
@@ -30,13 +30,15 @@ namespace AppSmartMailBox.Views
             if ((!String.IsNullOrEmpty(Entry_password1.Text) && Entry_password1.Text == Entry_password2.Text) || (String.IsNullOrEmpty(Entry_password1.Text) && String.IsNullOrEmpty(Entry_password2.Text) ) )
             {
                 password.IsVisible = false;
-                utilisateur.password = Entry_password1.Text;
-                Utilisateur newUtilisateur = new Utilisateur();
-                newUtilisateur.firstName = utilisateur.firstName;
-                newUtilisateur.lastName = utilisateur.lastName;
-                newUtilisateur.email = utilisateur.email;
-                newUtilisateur.password = utilisateur.password;
-                
+                _utilisateur.password = Entry_password1.Text;
+                Utilisateur newUtilisateur = new Utilisateur
+                {
+                    firstName = _utilisateur.firstName,
+                    lastName = _utilisateur.lastName,
+                    email = _utilisateur.email,
+                    password = _utilisateur.password
+                };
+
 
                 var utilisateurCreate = App.Rest.PutResponse<Utilisateur>(Constants.UpdateUser, JsonConvert.SerializeObject(newUtilisateur));
                 if (utilisateurCreate.Errors != null)
@@ -59,7 +61,7 @@ namespace AppSmartMailBox.Views
                 {
                     var pageOk = new MisAJour("Vos informations ont bien été mises à jour.", Color.Green);
                     await PopupNavigation.Instance.PushAsync(pageOk);
-                    App.utilisateur = utilisateurCreate.t;
+                    App.Utilisateur = utilisateurCreate.t;
                     await Task.Delay(2000);
                     await PopupNavigation.Instance.PopAsync();
                     Device.BeginInvokeOnMainThread(() => App.Current.MainPage = new NavigationPage(new MasterPageDetail()));

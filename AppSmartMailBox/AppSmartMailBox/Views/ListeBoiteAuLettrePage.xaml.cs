@@ -16,13 +16,13 @@ namespace AppSmartMailBox.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListeBoiteAuLettrePage : ContentPage
     {
-        public List<BoiteAuLettreViewModel> boiteAuLettres;
+        public List<BoiteAuLettreViewModel> BoiteAuLettres;
         public ListeBoiteAuLettrePage()
         {
             BindingContext = new RefreshBoiteAuLettreViewModel(this);
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
             var page = new UserAnimationPage();
             await PopupNavigation.Instance.PushAsync(page);
@@ -33,12 +33,12 @@ namespace AppSmartMailBox.Views
         public void InitBinding()
         {
             InitializeComponent();
-            boiteAuLettres = new List<BoiteAuLettreViewModel>();
-            foreach (var boiteAuLettre in App.utilisateur.boiteAuLettres)
+            BoiteAuLettres = new List<BoiteAuLettreViewModel>();
+            foreach (var boiteAuLettre in App.Utilisateur.boiteAuLettres)
             {
-                boiteAuLettres.Add(new BoiteAuLettreViewModel(boiteAuLettre));
+                BoiteAuLettres.Add(new BoiteAuLettreViewModel(boiteAuLettre));
             }
-            ObservableCollection<BoiteAuLettre> observableCollection = new ObservableCollection<BoiteAuLettre>(boiteAuLettres);
+            ObservableCollection<BoiteAuLettre> observableCollection = new ObservableCollection<BoiteAuLettre>(BoiteAuLettres);
             MyListViewBAL.ItemsSource = observableCollection;
         }
 

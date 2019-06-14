@@ -16,27 +16,27 @@ namespace AppSmartMailBox.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListeCourrierDansBALPage : ContentPage
     {
-        private List<CourrierViewModel> courriers;
-        private long idBoiteAuLettre;
+        private List<CourrierViewModel> _courriers;
+        private readonly long _idBoiteAuLettre;
         public ListeCourrierDansBALPage(int id)
         {
-            idBoiteAuLettre = id;
+            _idBoiteAuLettre = id;
             InitBindings();
 
 
-            Title = App.utilisateur.boiteAuLettres.Where(e => e.id == id).Select(e => e.description).FirstOrDefault();
+            Title = App.Utilisateur.boiteAuLettres.Where(e => e.id == id).Select(e => e.description).FirstOrDefault();
         }
 
         private void InitBindings()
         {
             InitializeComponent();
-            List<Courrier> courriersStd = App.utilisateur.boiteAuLettres.Where(e => e.id == idBoiteAuLettre).SelectMany(e => e.courriers).ToList();
-            courriers = new List<CourrierViewModel>();
+            List<Courrier> courriersStd = App.Utilisateur.boiteAuLettres.Where(e => e.id == _idBoiteAuLettre).SelectMany(e => e.courriers).ToList();
+            _courriers = new List<CourrierViewModel>();
             foreach (var courrier in courriersStd)
             {
-                courriers.Add(new CourrierViewModel(courrier));
+                _courriers.Add(new CourrierViewModel(courrier));
             }
-            MyListViewCourrier.ItemsSource = courriers.OrderByDescending(e => e.dateReception);
+            MyListViewCourrier.ItemsSource = _courriers.OrderByDescending(e => e.dateReception);
         }
 
         private async void CourrierVu(object sender, EventArgs ev)
@@ -52,7 +52,7 @@ namespace AppSmartMailBox.Views
 
             if(courrierUpdated.t!=null)
             {
-                App.utilisateur.boiteAuLettres.Where(e => e.id == idBoiteAuLettre).FirstOrDefault().courriers.Where(e => e.id == id).FirstOrDefault().vu = true;
+                App.Utilisateur.boiteAuLettres.FirstOrDefault(e => e.id == _idBoiteAuLettre).courriers.FirstOrDefault(e => e.id == id).vu = true;
                 InitBindings();
             }
             await PopupNavigation.Instance.PopAsync();

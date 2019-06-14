@@ -24,9 +24,7 @@ namespace AppSmartMailBox.Views
         {
             var page = new UserAnimationPage();
             await PopupNavigation.Instance.PushAsync(page);
-            BoiteAuLettre boiteAuLettre = new BoiteAuLettre();
-            boiteAuLettre.numeroSerie = Entry_numSerie.Text;
-            //boiteAuLettre.description = Entry_descriptionBAL.Text;
+            BoiteAuLettre boiteAuLettre = new BoiteAuLettre {numeroSerie = Entry_numSerie.Text};
             if (!String.IsNullOrEmpty(boiteAuLettre.numeroSerie))
             {
                 var boiteAuLettreCreated = App.Rest.PostReponse<BoiteAuLettre>(Constants.CreateBAL, JsonConvert.SerializeObject(boiteAuLettre));
@@ -36,8 +34,6 @@ namespace AppSmartMailBox.Views
                     await PopupNavigation.Instance.PushAsync(pageOk);
                     await Task.Delay(2000);
                     await PopupNavigation.Instance.PopAsync();
-                    //App.utilisateur.boiteAuLettres = boiteAuLettreCreated.t.boiteAuLettres;
-                    //InitBinding();
                     await PopupNavigation.Instance.PopAsync();
                 }
                 else

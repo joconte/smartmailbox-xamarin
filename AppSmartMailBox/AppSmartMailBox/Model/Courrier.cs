@@ -13,6 +13,5 @@ namespace AppSmartMailBox.Model
 
         public double dateReception { get; set; }
 
-        //public BoiteAuLettre boiteAuLettre { get; set; }
     }
 }
