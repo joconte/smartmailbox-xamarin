@@ -114,6 +114,7 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -145,8 +146,12 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\AppSmartMailBox\AppSmartMailBox.csproj">
-      <Project>{EDC3CAE2-A781-496B-B3E2-65131AAC3DE7}</Project>
+      <Project>{306163A6-65B7-4E69-9919-A590CB02F5F0}</Project>
       <Name>AppSmartMailBox</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ethac.ttf" />
+    <BundleResource Include="Resources\PortailIcons.ttf" />
   </ItemGroup>
 </Project>
