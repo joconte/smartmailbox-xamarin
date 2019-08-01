@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SmartMailBoxLib.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox.Views
 {
@@ -16,11 +18,13 @@ namespace AppSmartMailBox.Views
     public partial class InfosPersonnellesPage : ContentPage
     {
         private readonly Utilisateur _utilisateur;
+        private IUtilisateurService utilisateurService;
         public InfosPersonnellesPage()
         {
             InitializeComponent();
             _utilisateur = App.Utilisateur;
             BindingContext = _utilisateur;
+            utilisateurService = UtilisateurServiceManager.GetUtilisateurService();
         }
 
         private async void Btn_Save_Clicked(object sender, EventArgs e)
@@ -40,7 +44,7 @@ namespace AppSmartMailBox.Views
                 };
 
 
-                var utilisateurCreate = App.Rest.PutResponse<Utilisateur>(Constants.UpdateUser, JsonConvert.SerializeObject(newUtilisateur));
+                var utilisateurCreate = utilisateurService.PutInformationsPersonnelles(newUtilisateur);
                 if (utilisateurCreate.Errors != null)
                 {
                     foreach (KeyValuePair<string, List<string>> attr in utilisateurCreate.Errors)

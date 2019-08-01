@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AppSmartMailBox.Func;
+using SmartMailBoxLib.Models;
 
 namespace AppSmartMailBox.Model.ViewModel
 {

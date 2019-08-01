@@ -1,5 +1,5 @@
-﻿using AppSmartMailBox.Model;
-using AppSmartMailBox.REST;
+﻿using SmartMailBoxLib.Models;
+using SmartMailBoxLib.REST;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,20 +10,13 @@ namespace AppSmartMailBox
     {
         public static Utilisateur Utilisateur { get; set; }
 
-        public static RestService RestService;
+        
         public App()
         {
             InitializeComponent();
             Plugin.Iconize.Iconize.With(new PortailIcon.PortailIconModule());
+            Constants.IsMocked = false;
             MainPage = new NavigationPage(new MainPage());
-        }
-
-        private static RestService _rest;
-
-        public static RestService Rest
-        {
-            get => RestService ?? (RestService = new RestService());
-            set => _rest = value;
         }
 
         protected override void OnStart()

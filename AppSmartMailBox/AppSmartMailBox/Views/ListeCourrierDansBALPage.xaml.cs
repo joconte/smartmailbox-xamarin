@@ -7,9 +7,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SmartMailBoxLib.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox.Views
 {
@@ -18,13 +20,13 @@ namespace AppSmartMailBox.Views
     {
         private List<CourrierViewModel> _courriers;
         private readonly long _idBoiteAuLettre;
+        private ICourrierService courrierService;
         public ListeCourrierDansBALPage(int id)
         {
             _idBoiteAuLettre = id;
             InitBindings();
-
-
             Title = App.Utilisateur.boiteAuLettres.Where(e => e.id == id).Select(e => e.description).FirstOrDefault();
+            courrierService = CourrierServiceManager.GetCourrierService();
         }
 
         private void InitBindings()
@@ -48,9 +50,9 @@ namespace AppSmartMailBox.Views
             Frame courrier = (Frame)sender;
             int id = int.Parse(courrier.ClassId);
 
-            var courrierUpdated = App.Rest.PutResponse<Courrier>(String.Format(Constants.UpdateCourrierBybyId, id), null);
+            var courrierUpdated = courrierService.PutCourrierVu(id);
 
-            if(courrierUpdated.t!=null)
+            if (courrierUpdated.t!=null)
             {
                 App.Utilisateur.boiteAuLettres.FirstOrDefault(e => e.id == _idBoiteAuLettre).courriers.FirstOrDefault(e => e.id == id).vu = true;
                 InitBindings();

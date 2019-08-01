@@ -8,18 +8,23 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SmartMailBoxLib.Models;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateAccountPage : ContentPage
     {
+        private IAccountService accountService;
         private readonly Utilisateur _utilisateur; 
         public CreateAccountPage()
         {
             InitializeComponent();
             _utilisateur = new Utilisateur();
             BindingContext = _utilisateur;
+            accountService = AccountServiceManager.GetAccountService();
         }
 
         private async void Btn_Save_Clicked(object sender, EventArgs e)
@@ -30,7 +35,7 @@ namespace AppSmartMailBox.Views
             {
                 password.IsVisible = false;
                 _utilisateur.password = Entry_password1.Text;
-                var utilisateurCreate = App.Rest.PostReponse<Utilisateur>(Constants.RegisterUtilisateur, JsonConvert.SerializeObject(_utilisateur));
+                var utilisateurCreate = accountService.PostCreateAccount(_utilisateur);
                 if (utilisateurCreate.Errors != null)
                 {
                     foreach (KeyValuePair<string, List<string>> attr in utilisateurCreate.Errors)

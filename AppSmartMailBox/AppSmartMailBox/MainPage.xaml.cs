@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Models;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox
 {
@@ -17,12 +20,16 @@ namespace AppSmartMailBox
     [DesignTimeVisible(true)]
     public partial class MainPage : ContentPage
     {
+        IAccountService accountService;
+        IUtilisateurService utilisateurService;
         public MainPage()
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
             NavigationPage.SetHasNavigationBar(this, false);
             Init();
+            accountService = AccountServiceManager.GetAccountService();
+            utilisateurService = UtilisateurServiceManager.GetUtilisateurService();
         }
 
         void Init()
@@ -45,9 +52,9 @@ namespace AppSmartMailBox
             utilisateur.password = Entry_Password.Text;
             try
             {
-                await App.Rest.Login(utilisateur);
-                
-                GenericObjectWithErrorModel<Utilisateur> utilisateurWithError = App.Rest.GetResponse<GenericObjectWithErrorModel<Utilisateur>>(Constants.UtilisateurConnected);
+                await accountService.Login(utilisateur);
+
+                GenericObjectWithErrorModel<Utilisateur> utilisateurWithError = utilisateurService.GetUtilisateurConnectedWithErrorModel();
                 if (utilisateurWithError.t == null)
                 {
                     throw new Exception("Utilisateur non trouvé");
@@ -78,7 +85,7 @@ namespace AppSmartMailBox
             await PopupNavigation.Instance.PushAsync(page);
             if (!string.IsNullOrEmpty(Entry_Username.Text))
             {
-                var utilisateurCreate = App.Rest.PostReponse<string>(Constants.ForgotPassword, Entry_Username.Text);
+                var utilisateurCreate = accountService.PostForgotPassword(Entry_Username.Text);
 
                 if (utilisateurCreate.t != null)
                 {

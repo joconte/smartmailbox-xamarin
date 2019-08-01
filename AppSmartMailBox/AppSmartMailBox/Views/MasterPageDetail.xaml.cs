@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SmartMailBoxLib.Models;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox.Views
 {
@@ -15,11 +17,14 @@ namespace AppSmartMailBox.Views
     public partial class MasterPageDetail : MasterDetailPage
     {
         public List<MasterPageItem> MenuList { get; set; }
+        private IAccountService accountService;
         public MasterPageDetail()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             NavigationPage.SetHasBackButton(this, false);
+
+            accountService = AccountServiceManager.GetAccountService();
 
             Identite.Text = App.Utilisateur.lastName.ToUpper() + " " + App.Utilisateur.firstName;
 
@@ -86,9 +91,7 @@ namespace AppSmartMailBox.Views
                         break;
                         
                     case 4:
-                        // Logique de deconnexion à mettre en place
-                        App.Rest = null;
-                        App.RestService = null;
+                        accountService.Logout();
                         App.Utilisateur = null;
                         
                         Detail = new NavigationPage(new MainPage());

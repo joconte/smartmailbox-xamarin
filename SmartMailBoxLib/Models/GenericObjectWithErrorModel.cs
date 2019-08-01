@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AppSmartMailBox.Model
+namespace SmartMailBoxLib.Models
 {
     public class GenericObjectWithErrorModel<T>
     {

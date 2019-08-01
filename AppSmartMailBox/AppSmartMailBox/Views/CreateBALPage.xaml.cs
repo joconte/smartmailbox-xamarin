@@ -6,18 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SmartMailBoxLib.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateBALPage : ContentPage
     {
+        private IBoiteAuLettreService boiteAuLettreService;
         public CreateBALPage()
         {
             InitializeComponent();
+            boiteAuLettreService = BoiteAuLettreServiceManager.GetBoiteAuLettreService();
         }
 
         private async void CreateBAL(object sender, EventArgs e)
@@ -27,7 +31,7 @@ namespace AppSmartMailBox.Views
             BoiteAuLettre boiteAuLettre = new BoiteAuLettre {numeroSerie = Entry_numSerie.Text};
             if (!String.IsNullOrEmpty(boiteAuLettre.numeroSerie))
             {
-                var boiteAuLettreCreated = App.Rest.PostReponse<BoiteAuLettre>(Constants.CreateBAL, JsonConvert.SerializeObject(boiteAuLettre));
+                var boiteAuLettreCreated = boiteAuLettreService.PostCreateBoiteAuLettre(boiteAuLettre);
                 if (boiteAuLettreCreated.t != null)
                 {
                     var pageOk = new MisAJour("La boite aux lettres a été créé.", Color.Green);

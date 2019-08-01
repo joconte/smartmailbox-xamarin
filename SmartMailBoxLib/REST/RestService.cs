@@ -1,4 +1,4 @@
-﻿using AppSmartMailBox.Model;
+﻿using SmartMailBoxLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,29 +8,41 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace AppSmartMailBox.REST
+namespace SmartMailBoxLib.REST
 {
-    public class RestService
+    internal class RestService
     {
-        readonly HttpClient _client;
+        public HttpClient _client;
+        private static RestService instance = null;
+        private static readonly object padlock = new object();
 
-        public RestService()
+        RestService()
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri(Constants.BaseAdresse);
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            
         }
 
-        //Login api avec token
-        public async Task<string> Login(Utilisateur utilisateur)
+        public static RestService Instance
         {
-            string response = PostReponseLogin(Constants.LoginUrl, utilisateur);
-            _client.DefaultRequestHeaders.Authorization
-                     = new AuthenticationHeaderValue("Bearer", response);
-            return response;
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new RestService();
+                    }
+                    return instance;
+                }
+            }
         }
-        
+
+        public void Logout()
+        {
+            instance = null;
+            _client = null;
+        }
 
         public async Task<T> PostResponse<T>(string url, string jsonstring) where T : class
         {
@@ -148,20 +160,7 @@ namespace AppSmartMailBox.REST
         }
 
 
-        public string PostReponseLogin(string url, Utilisateur utilisateur)
-        {
-            string token = null;
-            const string contentType = "application/json";
-            
-            string jsonstring = JsonConvert.SerializeObject(utilisateur);
-            jsonstring = jsonstring ?? "";
-            var httpContent = new StringContent(jsonstring, Encoding.UTF8, contentType);
-            var result = _client.PostAsync(url, httpContent).Result;
-            var jsonResult = result.Content.ReadAsStringAsync().Result;
-            token = jsonResult;
-            
-            return token;
-        }
+       
 
         public GenericObjectWithErrorModel<T> PostReponse<T>(string url, string jsonstring) where T : class
         {

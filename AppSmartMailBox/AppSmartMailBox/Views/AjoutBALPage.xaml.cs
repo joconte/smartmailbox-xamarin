@@ -6,18 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SmartMailBoxLib.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AjoutBALPage : ContentPage
     {
+        private IBoiteAuLettreService boiteAuLettreService;
         public AjoutBALPage()
         {
             InitializeComponent();
+            boiteAuLettreService = BoiteAuLettreServiceManager.GetBoiteAuLettreService();
         }
 
         private async void AddBAL(object sender, EventArgs e)
@@ -30,7 +34,7 @@ namespace AppSmartMailBox.Views
             };
             if (!String.IsNullOrEmpty(boiteAuLettre.numeroSerie))
             {
-                var utilisateurUpdated = App.Rest.PostReponse<Utilisateur>(Constants.AddBalToCurrentUser, JsonConvert.SerializeObject(boiteAuLettre));
+                var utilisateurUpdated = boiteAuLettreService.PutAjoutBoiteToUtilisateur(boiteAuLettre);
                 if (utilisateurUpdated.t != null)
                 {
                     var pageOk = new MisAJour("La boite aux lettres a été ajouté.", Color.Green);

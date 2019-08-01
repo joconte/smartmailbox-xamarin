@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace AppSmartMailBox.Model
+namespace SmartMailBoxLib.Models
 {
     public class Constants
     {
+        public static bool IsMocked { get; set; }
         public static readonly Color BackgroundColor = Color.FromArgb(255, 255, 255);
         public static readonly Color MainTextColor = Color.Black;
         public static readonly int LoginIconHeight = 120;

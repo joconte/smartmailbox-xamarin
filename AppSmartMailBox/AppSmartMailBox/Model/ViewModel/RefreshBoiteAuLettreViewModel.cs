@@ -7,17 +7,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using SmartMailBoxLib.Models;
+using SmartMailBoxLib.REST;
+using SmartMailBoxLib.Services;
 
 namespace AppSmartMailBox.Model.ViewModel
 {
     public class RefreshBoiteAuLettreViewModel : INotifyPropertyChanged
     {
+        private IUtilisateurService utilisateurService;
         public ObservableCollection<string> Items { get; set; }
         readonly ListeBoiteAuLettrePage _page;
         public RefreshBoiteAuLettreViewModel(ListeBoiteAuLettrePage page)
         {
             this._page = page;
             Items = new ObservableCollection<string>();
+            utilisateurService = UtilisateurServiceManager.GetUtilisateurService();
         }
 
         bool _canRefresh = true;
@@ -66,7 +71,7 @@ namespace AppSmartMailBox.Model.ViewModel
             IsBusy = true;
             Items.Clear();
 
-            GenericObjectWithErrorModel<Utilisateur> utilisateurWithError = App.Rest.GetResponse<GenericObjectWithErrorModel<Utilisateur>>(Constants.UtilisateurConnected);
+            GenericObjectWithErrorModel<Utilisateur> utilisateurWithError = utilisateurService.GetUtilisateurConnectedWithErrorModel();
             if (utilisateurWithError.t == null)
             {
                 throw new Exception("Le proposant n'a pas été trouvé.");

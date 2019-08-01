@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 
-namespace AppSmartMailBox.Model
+namespace SmartMailBoxLib.Models
 {
     public class MasterPageItem : INotifyPropertyChanged
     {
